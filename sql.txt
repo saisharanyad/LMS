@@ -1,0 +1,39 @@
+CREATE TABLE IF NOT EXISTS `books` (
+  `book_id` int AUTO_INCREMENT  PRIMARY KEY,
+  `author` varchar(100) NOT NULL,
+  `title` varchar(100) NOT NULL unique,
+  `isbn` varchar(20) NOT NULL unique,
+  `published_year` varchar(10) NOT NULL,
+  `availability_status` varchar(10) NOT NULL,
+  `created` DATE DEFAULT CURRENT_DATE,
+  `updated` DATE DEFAULT CURRENT_DATE,
+ `deleted` DATE DEFAULT CURRENT_DATE
+
+);
+
+CREATE TABLE IF NOT EXISTS `users` (
+  `user_id` int AUTO_INCREMENT  PRIMARY KEY,
+  `email_id` varchar(100) NOT NULL unique,
+  `username` varchar(200) NOT NULL unique
+);
+
+CREATE TABLE IF NOT EXISTS `wishlist_users` (
+`user_status` varchar(10),
+`book_status` varchar(10),
+  `user_id` int NOT NULL,
+  `book_id` int NOT NULL,
+   PRIMARY KEY(user_id,book_id),
+   FOREIGN KEY (user_id) REFERENCES  users(user_id) ON DELETE CASCADE,
+   FOREIGN KEY (book_id) REFERENCES  books(book_id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS `book_status_comm_outbox` (
+   `comm_id` int AUTO_INCREMENT  PRIMARY KEY,
+  `book_id` int NOT NULL ,
+   `user_id` int NOT NULL,
+  `availability_status` varchar(20) NOT NULL,
+  `notification_status` varchar(20),
+  `notification_desc` varchar(100),
+  `created` DATE DEFAULT CURRENT_DATE,
+  `updated` DATE DEFAULT CURRENT_DATE
+);
